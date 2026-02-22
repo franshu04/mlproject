@@ -8,13 +8,16 @@ from src.mlprojectt.exception import CustomException
 from src.mlprojectt.logger import logging
 
 import pandas as pd
-
 from sklearn.model_selection import train_test_split
 # import dataclasses import dataclass
 from dataclasses import dataclass
 
 from src.mlprojectt.components.data_transformation import DataTransformation
 from src.mlprojectt.components.data_transformation import DataTransformationConfig
+
+from src.mlprojectt.components.model_trainer import ModelTrainerConfig
+from src.mlprojectt.components.model_trainer import ModelTrainer
+
 
 @dataclass
 class DataIngestionConfig:
@@ -58,4 +61,7 @@ if __name__=="__main__":
     train_data,test_data=obj.initiate_data_ingestion()
 
     data_transformation=DataTransformation()
-    data_transformation.initiate_data_transformation(train_data,test_data)
+    train_arr,test_arr,_= data_transformation.initiate_data_transformation(train_data,test_data)
+
+    ModelTrainer=ModelTrainer()
+    print(ModelTrainer.initiate_model_trainer(train_arr,test_arr))
